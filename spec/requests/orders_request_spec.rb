@@ -1,22 +1,25 @@
-# require 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe "Orders", type: :request do
+    # let!(:customer) { create :customer }
+    # let!(:order) { create :order, customer_id: customer.id }
     describe "get orders_path" do
         it "renders the index view" do
           # create_list's second argument is the number of records
-          FactoryBot.create_list(:order, 5)
+          customer = FactoryBot.create_list(:customer, 1)
           get orders_path
           expect(response.status).to eq(200)
         end
     end
 
-    
     describe "get order_path" do
         it "renders the :show template" do
+            # customer = FactoryBot.create(:customer)
             order = FactoryBot.create(:order)
             get order_path(id: order.id)
             expect(response.status).to eq(200)
         end
+        
         it "redirects to the index path if the order id is invalid" do
             get order_path(id: 5000) #an ID that doesn't exist
             expect(response).to redirect_to orders_path
@@ -61,9 +64,9 @@ RSpec.describe "Orders", type: :request do
     describe "put order_path with valid data" do
         it "updates an entry and redirects to the show path for the order" do
             order = FactoryBot.create(:order)
-            put order_path(id: customer.id), params: {order: {product_name: "Cucumber"}}
+            put order_path(id: order.id), params: {order: {product_name: "Cucumber"}}
             order.reload
-            expect(customer.product_name).to eq("Cucumber")
+            expect(order.product_name).to eq("Cucumber")
             expect(response).to redirect_to order_path(id: order.id)
         end
     end

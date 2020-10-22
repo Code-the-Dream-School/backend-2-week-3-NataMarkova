@@ -23,8 +23,8 @@ RSpec.describe Order, type: :model do
     expect(subject).to_not be_valid
   end
 
-  # it "is not valid if the product_count is not a digit" do
-  #   subject.product_count ="something"
-  #   expect(subject).to_not be_valid
-  # end
+  it "is not valid if the product_count is not a digit" do
+    subject.product_count ="something"
+    expect(subject).to_not be_valid
+  end
 end
